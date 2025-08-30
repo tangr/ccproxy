@@ -1,58 +1,52 @@
-# Multi-stage build for Python application
+# Multi-stage build for Next.js application
 
 # Stage 1: Build dependencies
-FROM python:3.13.7-slim AS builder
+FROM node:18-alpine AS builder
 
 WORKDIR /build
 
-# Install build dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+# Copy package files
+COPY package*.json ./
 
-# Copy requirements first for better caching
-COPY requirements*.txt ./
+# Install dependencies
+RUN npm ci --only=production && npm cache clean --force
 
-# Create virtual environment and install dependencies
-RUN python -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+# Copy source code and build
+COPY . .
+RUN npm run build
 
 # Stage 2: Production image
-FROM python:3.13.7-slim AS production
+FROM node:18-alpine AS production
 
 WORKDIR /app
 
-# Install only runtime dependencies
-RUN apt-get update && apt-get install -y \
-    curl \
-    && rm -rf /var/lib/apt/lists/* \
-    && groupadd --gid 1001 appgroup \
-    && useradd --uid 1001 --gid appgroup --shell /bin/bash --create-home appuser
+# Install curl for health checks
+RUN apk add --no-cache curl \
+    && addgroup --gid 1001 --system nodejs \
+    && adduser --system nextjs --uid 1001
 
-# Copy virtual environment from builder
-COPY --from=builder /opt/venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
+# Copy production files
+COPY --from=builder --chown=nextjs:nodejs /build/.next ./.next
+COPY --from=builder --chown=nextjs:nodejs /build/public ./public
+COPY --from=builder --chown=nextjs:nodejs /build/package*.json ./
+COPY --from=builder --chown=nextjs:nodejs /build/config ./config
 
-# Copy application code
-COPY --chown=appuser:appgroup . .
+# Install production dependencies
+RUN npm ci --only=production && npm cache clean --force
 
-# Switch to non-root user for security
-USER appuser
+# Switch to non-root user
+USER nextjs
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8000/health || exit 1
+    CMD curl -f http://localhost:3000/ || exit 1
 
 # Expose application port
-EXPOSE 8000
+EXPOSE 3000
 
 # Set environment variables
-ENV PYTHONPATH=/app
-ENV PYTHONUNBUFFERED=1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # Default command
-CMD ["python", "main.py"]
+CMD ["npm", "start"]

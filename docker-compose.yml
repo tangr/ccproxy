@@ -1,5 +1,5 @@
 services:
-  app:
+  ccproxy:
     build:
       context: .
       dockerfile: Dockerfile
@@ -7,23 +7,17 @@ services:
       platforms:
         - linux/amd64
         - linux/arm64
-    image: sample-app:latest
-    container_name: sample-app
+    image: ccproxy:latest
+    container_name: ccproxy
     restart: unless-stopped
     ports:
-      - "8000:8000"
+      - "3000:3000"
     environment:
       - NODE_ENV=production
-      - REDIS_URL=redis://redis:6379/0
     volumes:
-      - ./logs:/app/logs
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_started
+      - ./config:/app/config:ro
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
       interval: 30s
       timeout: 10s
       retries: 3
