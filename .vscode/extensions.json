@@ -1,0 +1,50 @@
+{
+  "recommendations": [
+    // Frontend/JavaScript/TypeScript
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-typescript-next",
+    "dbaeumer.vscode-eslint",
+
+    // Python
+    "ms-python.python",
+    "ms-python.black-formatter",
+    "ms-python.flake8",
+    "ms-python.isort",
+
+    // Go
+    "golang.go",
+
+    // YAML/JSON/TOML/Properties
+    "redhat.vscode-yaml",
+    "ms-vscode.vscode-json",
+    "tamasfe.even-better-toml",
+
+    // Shell scripting
+    "timonwong.shellcheck",
+    "foxundermoon.shell-format",
+
+    // Docker
+    "ms-azuretools.vscode-docker",
+
+    // Git
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+
+    // General productivity
+    "ms-vscode.vscode-language-pack-zh-hans",
+    "ms-vscode-remote.remote-containers",
+    "ms-vscode-remote.remote-ssh",
+    "ms-vscode.remote-explorer",
+    "ms-vscode.hexeditor",
+    "gruntfuggly.todo-tree",
+    "streetsidesoftware.code-spell-checker",
+
+    // Themes and icons
+    "pkief.material-icon-theme",
+    "github.github-vscode-theme"
+  ],
+  "unwantedRecommendations": [
+    "ms-vscode.vscode-typescript"
+  ]
+}

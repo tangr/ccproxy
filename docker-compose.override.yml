@@ -1,0 +1,32 @@
+# Docker Compose override for development environment
+# This file automatically extends docker-compose.yml when running docker-compose commands
+# Use: docker-compose up (automatically includes override)
+# Production: docker-compose -f docker-compose.yml up (excludes override)
+
+services:
+  app:
+    build:
+      target: production # Override to use development target if needed
+    environment:
+      - NODE_ENV=development
+      - DEBUG=true
+      - LOG_LEVEL=debug
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+    volumes:
+      # Mount source code for live reloading
+      - .:/app:cached
+      - /app/node_modules # Prevent overwriting node_modules
+      - ./logs:/app/logs
+    ports:
+      # Additional debug ports
+      - "8000:8000" # App port
+      - "5678:5678" # Python debugger
+      - "9229:9229" # Node.js debugger
+    command: >
+      sh -c "
+        pip install debugpy &&
+        python -m debugpy --listen 0.0.0.0:5678 --wait-for-client main.py
+      "
+    stdin_open: true
+    tty: true

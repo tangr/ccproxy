@@ -1,0 +1,218 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Python: Install Dependencies",
+      "type": "shell",
+      "command": "pip",
+      "args": ["install", "-r", "requirements.txt"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Python: Run Tests",
+      "type": "shell",
+      "command": "python",
+      "args": ["-m", "pytest"],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Python: Format Code",
+      "type": "shell",
+      "command": "black",
+      "args": ["."],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "Go: Build",
+      "type": "shell",
+      "command": "go",
+      "args": ["build", "."],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Go: Test",
+      "type": "shell",
+      "command": "go",
+      "args": ["test", "./..."],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Go: Format",
+      "type": "shell",
+      "command": "gofmt",
+      "args": ["-s", "-w", "."],
+      "group": "build"
+    },
+    {
+      "label": "Node: Install Dependencies",
+      "type": "shell",
+      "command": "npm",
+      "args": ["install"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Node: Build",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "build"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Node: Dev Server",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "dev"],
+      "group": "build",
+      "isBackground": true,
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Node: Test",
+      "type": "shell",
+      "command": "npm",
+      "args": ["test"],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Prettier: Format All",
+      "type": "shell",
+      "command": "prettier",
+      "args": ["--write", "."],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent"
+      }
+    },
+    {
+      "label": "Docker: Build",
+      "type": "shell",
+      "command": "docker",
+      "args": ["build", "-t", "${workspaceFolderBasename}", "."],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Docker Compose: Up",
+      "type": "shell",
+      "command": "docker-compose",
+      "args": ["up", "-d"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Docker Compose: Down",
+      "type": "shell",
+      "command": "docker-compose",
+      "args": ["down"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "YAML: Lint",
+      "type": "shell",
+      "command": "yamllint",
+      "args": ["."],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Shell: Check Scripts",
+      "type": "shell",
+      "command": "shellcheck",
+      "args": ["**/*.sh"],
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Shell: Format Scripts",
+      "type": "shell",
+      "command": "shfmt",
+      "args": ["-w", "-i", "2", "**/*.sh"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent"
+      }
+    }
+  ]
+}
