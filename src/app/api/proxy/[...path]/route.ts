@@ -24,9 +24,6 @@ async function forwardRequest(request: NextRequest, method: string) {
       });
     }
     
-    // Add authentication token
-    headers.set('Authorization', `Bearer ${config.auth.anthropic_token}`);
-    
     // Get request body for POST/PUT/PATCH methods
     let body = null;
     if (['POST', 'PUT', 'PATCH'].includes(method)) {

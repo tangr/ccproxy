@@ -2,9 +2,6 @@ litellm:
   base_url: "https://api.litellm.ai"
   timeout: 30000
   
-auth:
-  anthropic_token: "your-anthropic-auth-token-here"
-  
 proxy:
   forward_headers: true
   forward_response_headers: true
