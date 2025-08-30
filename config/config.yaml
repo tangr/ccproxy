@@ -1,11 +1,11 @@
 litellm:
   base_url: "https://api.litellm.ai"
   timeout: 30000
-  
+
 proxy:
   forward_headers: true
   forward_response_headers: true
-  
+
 server:
   port: 3000
   host: "0.0.0.0"
