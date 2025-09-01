@@ -6,7 +6,7 @@
 services:
   ccproxy:
     build:
-      target: production
+      target: development
     environment:
       - NODE_ENV=development
       - DEBUG=true
