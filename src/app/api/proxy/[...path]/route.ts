@@ -7,7 +7,7 @@ async function forwardRequest(request: NextRequest, method: string) {
 
     // Extract path from URL
     const url = new URL(request.url);
-    const pathSegments = url.pathname.split('/').slice(4); // Remove /api/proxy from path
+    const pathSegments = url.pathname.split('/').slice(3); // Remove /api/proxy from path
     const targetPath = '/' + pathSegments.join('/');
     const targetUrl = new URL(targetPath + url.search, config.litellm.base_url);
 
