@@ -1,5 +1,6 @@
 litellm:
-  base_url: "https://api.litellm.ai"
+  # base_url: "http://host.docker.internal:18080"
+  base_url: "http://host.docker.internal:4000/bedrock"
   timeout: 30000
 
 proxy:
