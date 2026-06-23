@@ -10,3 +10,10 @@ proxy:
 server:
   port: 3000
   host: "0.0.0.0"
+
+log_level: debug
+
+providers:
+
+source: claude
+to: openai
